@@ -17,12 +17,17 @@ public class RegistrationPage {
             phoneNumber = $("#userNumber"),
             dateOfBirthInput = $("#dateOfBirthInput"),
             subjectsInput = $("#subjectsInput"),
-            inputFile = $("#uploadPicture"),
-    currentAddress =  $("#currentAddress");
+            hobbiesWrapper = $("#hobbiesWrapper"),
+            uploadPicture = $("#uploadPicture"),
+            currentAddress = $("#currentAddress");
 
 
     public RegistrationPage openPage() {
         open("/automation-practice-form");
+        return this;
+    }
+
+    public RegistrationPage closeBanner() {
         executeJavaScript("$('#fixedban').remove()");
         executeJavaScript("$('footer').remove()");
         return this;
@@ -52,6 +57,7 @@ public class RegistrationPage {
         phoneNumber.setValue(value);
         return this;
     }
+
     public RegistrationPage dateBirthday(String day, String month, String year) {
         dateOfBirthInput.click();
         calendarComponent.setDateBirthday(day, month, year);
@@ -63,24 +69,27 @@ public class RegistrationPage {
         return this;
     }
 
-    public RegistrationPage setHobbies() {
-        $(byText("Music")).click();
+    public RegistrationPage setHobbies(String value) {
+        hobbiesWrapper.$(byText(value)).click();
         return this;
     }
 
-    public RegistrationPage setUploadFile() {
-        inputFile.uploadFile(new File("src/test/resources/img/1.png"));
+    public RegistrationPage setUploadFile(String value) {
+        uploadPicture.uploadFromClasspath("img/" + value);
         return this;
     }
+
     public RegistrationPage setCurrentAddress(String value) {
         currentAddress.setValue(value);
         return this;
     }
+
     public RegistrationPage setState(String value) {
         $("#state").click();
         $(byText(value)).click();
         return this;
     }
+
     public RegistrationPage setCity(String value) {
         $("#city").click();
         $(byText(value)).click();
@@ -91,12 +100,13 @@ public class RegistrationPage {
         $("#submit").click();
         return this;
     }
-    public RegistrationPage verifyResultsModalAppears(){
+
+    public RegistrationPage verifyResultsModalAppears() {
         registrationsResult.verifyModalAppears();
         return this;
     }
 
-    public RegistrationPage verifyResults(String key, String value){
+    public RegistrationPage verifyResults(String key, String value) {
         registrationsResult.verifyResults(key, value);
         return this;
     }
